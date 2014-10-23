@@ -11,7 +11,7 @@
 
 
     <modules>
-        <module>FinalStateMachine</module>
+        <module>FiniteStateMachine</module>
         <module>MathematicalCalculator</module>
     </modules>
 
