@@ -2,6 +2,6 @@ package com.teamdev.arseniuk;
 
 public interface MathCalculator {
 
-    public double calculate(String expression) throws CalculationException;
+    public double calculate(String expression) throws Exception;
 
 }

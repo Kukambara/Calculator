@@ -8,6 +8,7 @@ import java.util.Deque;
 public class CalculationStack {
     private final Deque<Double> operandStack = new ArrayDeque<>();
     private final Deque<Command> operationStack = new ArrayDeque<>();
+    private int openedParenthesisCount = 0;
 
     public Deque<Double> getOperandStack() {
         return operandStack;
@@ -15,5 +16,17 @@ public class CalculationStack {
 
     public Deque<Command> getOperationStack() {
         return operationStack;
+    }
+
+    public void incrementParenthesis() {
+        openedParenthesisCount++;
+    }
+
+    public void decrementParenthesis() {
+        openedParenthesisCount--;
+    }
+
+    public int getOpenedParenthesisCount() {
+        return openedParenthesisCount;
     }
 }

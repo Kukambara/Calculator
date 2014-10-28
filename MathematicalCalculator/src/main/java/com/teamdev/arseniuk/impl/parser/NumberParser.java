@@ -1,9 +1,8 @@
 package com.teamdev.arseniuk.impl.parser;
 
 import com.teamdev.arseniuk.CalculationParser;
-import com.teamdev.arseniuk.Command;
+import com.teamdev.arseniuk.Token;
 import com.teamdev.arseniuk.impl.CalculationContext;
-import com.teamdev.arseniuk.impl.CalculationStack;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -14,10 +13,15 @@ public class NumberParser implements CalculationParser {
     private final NumberFormat numberFormat = DecimalFormat.getNumberInstance(Locale.US);
 
     @Override
-    public Command parse(CalculationContext context) {
+    public Token parse(CalculationContext context) {
 
         final String mathExpression = context.getExpression();
-        final int index = context.getExpressionParsingIndex();
+        int index = context.getExpressionParsingIndex();
+
+        while (index < mathExpression.length() && Character.isSpaceChar(mathExpression.charAt(index))) {
+            index++;
+        }
+
 
         final ParsePosition parsePosition = new ParsePosition(index);
         final Number number = numberFormat.parse(mathExpression, parsePosition);
@@ -26,12 +30,8 @@ public class NumberParser implements CalculationParser {
         }
 
         context.setExpressionParsingIndex(parsePosition.getIndex());
+        context.getStack().getOperandStack().push(number.doubleValue());
 
-        return new Command() {
-            @Override
-            public void calculate(CalculationStack stack) {
-                stack.getOperandStack().push(number.doubleValue());
-            }
-        };
+        return new com.teamdev.arseniuk.impl.Number();
     }
 }

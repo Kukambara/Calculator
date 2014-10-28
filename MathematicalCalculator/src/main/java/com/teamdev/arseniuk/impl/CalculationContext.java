@@ -1,8 +1,6 @@
 package com.teamdev.arseniuk.impl;
 
-import com.teamdev.arseniuk.StateAcceptor;
-import com.teamdev.arseniuk.StateMachineContext;
-import com.teamdev.arseniuk.TransitionMatrix;
+import com.teamdev.arseniuk.*;
 
 public class CalculationContext implements StateMachineContext<State, CalculationContext> {
     private final CalculationMatrix matrix = new CalculationMatrix();
@@ -41,6 +39,4 @@ public class CalculationContext implements StateMachineContext<State, Calculatio
     public StateAcceptor<State, CalculationContext> getAcceptor() {
         return acceptor;
     }
-
-
 }

@@ -5,7 +5,7 @@ public abstract class FiniteStateMachine<State extends Enum,
         Result,
         Context extends StateMachineContext<State, Context>> {
 
-    public Result run(Context context) {
+    public Result run(Context context) throws Exception {
 
         final TransitionMatrix<State> matrix = context.getTransitionMatrix();
         State currentState = matrix.getStartState();
@@ -22,7 +22,7 @@ public abstract class FiniteStateMachine<State extends Enum,
         return finish(context);
     }
 
-    private State moveForward(Context context, State currentState) {
+    private State moveForward(Context context, State currentState) throws Exception {
 
         final StateAcceptor<State, Context> stateAcceptor = context.getAcceptor();
         final TransitionMatrix<State> matrix = context.getTransitionMatrix();
