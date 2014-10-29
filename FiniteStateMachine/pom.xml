@@ -10,8 +10,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>FinalStateMashine</artifactId>
+    <artifactId>FiniteStateMashine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+    <dependencies>
+
+    </dependencies>
 
 </project>
