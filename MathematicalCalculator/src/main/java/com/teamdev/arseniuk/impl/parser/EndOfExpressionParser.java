@@ -2,19 +2,16 @@ package com.teamdev.arseniuk.impl.parser;
 
 import com.teamdev.arseniuk.CalculationParser;
 import com.teamdev.arseniuk.Token;
-import com.teamdev.arseniuk.impl.CalculationContext;
 import com.teamdev.arseniuk.impl.EndOfExpression;
+import com.teamdev.arseniuk.impl.ExpressionReader;
 
 public class EndOfExpressionParser implements CalculationParser {
 
     @Override
-    public Token parse(CalculationContext context) {
-        if (context.getExpression().length() != context.getExpressionParsingIndex()) {
+    public Token parse(ExpressionReader reader) {
+        if (!reader.isEnd()) {
             return null;
         }
-        final EndOfExpression endOfExpression = new EndOfExpression();
-        context.getStack().getOperationStack().push(endOfExpression);
-        return endOfExpression;
-
+        return new EndOfExpression(reader.getIndex());
     }
 }

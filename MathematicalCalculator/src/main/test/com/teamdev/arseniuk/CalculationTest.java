@@ -1,14 +1,20 @@
 package com.teamdev.arseniuk;
 
 import com.teamdev.arseniuk.impl.Calculator;
+import com.teamdev.arseniuk.impl.State;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
 public class CalculationTest {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Test
-    public void testNumber() throws Exception {
+    public void testNumber() throws CalculationException {
         final double expected = 200;
         final String input = "200";
         Calculator calculator = new Calculator();
@@ -16,7 +22,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testDotFirstNumber() throws Exception {
+    public void testDotFirstNumber() throws CalculationException {
         final double expected = .200;
         final String input = ".200";
         Calculator calculator = new Calculator();
@@ -24,7 +30,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testSimpleAddition() throws Exception {
+    public void testSimpleAddition() throws CalculationException {
         final double expected = 200;
         final String input = "100 + 100";
         Calculator calculator = new Calculator();
@@ -32,7 +38,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testSimpleSubtraction() throws Exception {
+    public void testSimpleSubtraction() throws CalculationException {
         final double expected = 50;
         final String input = "150 - 100";
         Calculator calculator = new Calculator();
@@ -40,7 +46,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testSimpleDivision() throws Exception {
+    public void testSimpleDivision() throws CalculationException {
         final double expected = 30;
         final String input = "90 / 3";
         Calculator calculator = new Calculator();
@@ -48,7 +54,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testSimpleMultiplication() throws Exception {
+    public void testSimpleMultiplication() throws CalculationException {
         final double expected = 100;
         final String input = "20 * 5";
         Calculator calculator = new Calculator();
@@ -56,7 +62,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testSimpleInvolution() throws Exception {
+    public void testSimpleInvolution() throws CalculationException {
         final double expected = 1024;
         final String input = "2 ^ 10";
         Calculator calculator = new Calculator();
@@ -64,7 +70,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testCalculationWithDifferentPriority() throws Exception {
+    public void testCalculationWithDifferentPriority() throws CalculationException {
         final double expected = 70;
         final String input = "10 + 20 * 3";
         Calculator calculator = new Calculator();
@@ -72,27 +78,55 @@ public class CalculationTest {
     }
 
     @Test
-    public void testCalculationWithParenthesis() throws Exception {
-        final double expected = 90;
-        final String input = "(10 + 20 )* 3";
+    public void testCalculationWithParenthesis() throws CalculationException {
+        final double expected = 180;
+        final String input = "2 * (10 + 20)* 3";
         Calculator calculator = new Calculator();
         assertEquals(expected, calculator.calculate(input), 0);
     }
 
     @Test
-    public void testCalculationWithInnerParenthesis() throws Exception {
+    public void testCalculationWithInnerParenthesis() throws CalculationException {
         final double expected = -21;
         final String input = "(10 + (1*3) - 20 )* 3";
         Calculator calculator = new Calculator();
         assertEquals(expected, calculator.calculate(input), 0);
     }
 
-    @Test(expected = CalculationException.class)
-    public void testIncorrectParenthesis() throws Exception {
+    @Test
+    public void testAssociativity() throws CalculationException {
+        final double expected = 256;
+        final String input = "2^2^3";
+        Calculator calculator = new Calculator();
+        assertEquals(expected, calculator.calculate(input), 0);
+    }
+
+
+    @Test
+    public void testExceptionRightParenthesisMissed() throws CalculationException {
         final String input = "(10 + (1*3) - 20 * 3";
+        expectedException.expect(CalculationException.class);
+        expectedException.expectMessage("Right parenthesis missed at position " + input.length());
         Calculator calculator = new Calculator();
         calculator.calculate(input);
     }
 
+    @Test
+    public void testExceptionLeftParenthesisMissed() throws CalculationException {
+        final String input = "10 + (1*3) - 20 * 3)";
+        expectedException.expect(CalculationException.class);
+        expectedException.expectMessage("Left parenthesis missed at position " + (input.length() - 1));
+        Calculator calculator = new Calculator();
+        calculator.calculate(input);
+    }
+
+    @Test
+    public void testExceptionDeadlock() throws CalculationException {
+        final String input = "10 + + 3";
+        expectedException.expect(CalculationException.class);
+        expectedException.expectMessage("Deadlock in state " + State.BINARY_OPERATION.toString() + " at position " + 5);
+        Calculator calculator = new Calculator();
+        calculator.calculate(input);
+    }
 
 }

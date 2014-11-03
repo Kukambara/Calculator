@@ -1,43 +1,63 @@
 package com.teamdev.arseniuk;
 
 import java.util.HashMap;
+import java.util.Set;
+
+import static com.teamdev.arseniuk.Operation.Associativity.LEFT;
+import static com.teamdev.arseniuk.Operation.Associativity.RIGHT;
 
 public enum Operation {
 
-    ADDITION('+', 2),
-    SUBTRACTION('-', 2),
-    MULTIPLICATION('*', 3),
-    DIVISION('/', 3),
-    INVOLUTION('^', 4),
-    LEFT_PARENTHESIS('(', 1),
-    RIGHT_PARENTHESIS(')', 1),
-    END_OF_EXPRESSION('\0', 0);
+    ADDITION("+", 2, LEFT),
+
+    SUBTRACTION("-", 2, LEFT),
+
+    MULTIPLICATION("*", 3, LEFT),
+
+    DIVISION("/", 3, LEFT),
+
+    INVOLUTION("^", 4, RIGHT);
 
 
-    private char symbol;
+    enum Associativity {
+        LEFT, RIGHT
+    }
+
+
+    private String value;
     private int priority;
+    private Associativity associativity;
 
-    private static final HashMap<Character, Operation> lookup = new HashMap<Character, Operation>();
+    private static final HashMap<String, Operation> lookup = new HashMap<>();
 
     static {
         for (Operation operation : Operation.values())
-            lookup.put(operation.getSymbol(), operation);
+            lookup.put(operation.getValue(), operation);
     }
 
-    Operation(char symbol, int priority) {
-        this.symbol = symbol;
+    Operation(String value, int priority, Associativity associativity) {
+        this.value = value;
         this.priority = priority;
+        this.associativity = associativity;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public char getSymbol() {
-        return symbol;
+    public String getValue() {
+        return value;
     }
 
-    public static Operation get(Character symbol) {
+    public Associativity getAssociativity() {
+        return associativity;
+    }
+
+    public static Operation get(String symbol) {
         return lookup.get(symbol);
+    }
+
+    public static Set<String> getPresentations() {
+        return lookup.keySet();
     }
 }

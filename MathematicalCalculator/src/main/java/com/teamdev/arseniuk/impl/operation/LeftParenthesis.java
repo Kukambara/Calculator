@@ -1,25 +1,17 @@
 package com.teamdev.arseniuk.impl.operation;
 
-import com.teamdev.arseniuk.Command;
-import com.teamdev.arseniuk.Operation;
-import com.teamdev.arseniuk.Visitor;
+import com.teamdev.arseniuk.Token;
 import com.teamdev.arseniuk.impl.CalculationStack;
 
-public class LeftParenthesis extends Command {
+public class LeftParenthesis extends Token {
 
-    public LeftParenthesis() {
-        super(Operation.LEFT_PARENTHESIS);
+
+    public LeftParenthesis(int parsingIndex) {
+        super(parsingIndex);
     }
 
     @Override
     public void execute(CalculationStack stack) {
-
+        stack.addLeftParenthesis();
     }
-
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
-    }
-
 }

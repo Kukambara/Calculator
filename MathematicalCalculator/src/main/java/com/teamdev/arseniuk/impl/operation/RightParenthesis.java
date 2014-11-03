@@ -1,25 +1,20 @@
 package com.teamdev.arseniuk.impl.operation;
 
 import com.teamdev.arseniuk.CalculationException;
-import com.teamdev.arseniuk.Command;
-import com.teamdev.arseniuk.Operation;
-import com.teamdev.arseniuk.Visitor;
+import com.teamdev.arseniuk.Token;
 import com.teamdev.arseniuk.impl.CalculationStack;
 
-public class RightParenthesis extends Command {
+public class RightParenthesis extends Token {
 
-    public RightParenthesis() {
-        super(Operation.RIGHT_PARENTHESIS);
+    public RightParenthesis(int parsingIndex) {
+        super(parsingIndex);
     }
 
     @Override
-    public void execute(CalculationStack stack) {
-
+    public void execute(CalculationStack stack) throws CalculationException {
+        if (stack.getParenthesisStack().isEmpty()) {
+            throw new CalculationException("Left parenthesis missed at position ", getParsingIndex());
+        }
+        stack.addRightParenthesis();
     }
-
-    @Override
-    public void accept(Visitor visitor) throws CalculationException {
-        visitor.visit(this);
-    }
-
 }

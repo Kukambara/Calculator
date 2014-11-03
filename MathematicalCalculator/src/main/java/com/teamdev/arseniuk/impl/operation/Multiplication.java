@@ -1,29 +1,16 @@
 package com.teamdev.arseniuk.impl.operation;
 
-import com.teamdev.arseniuk.CalculationException;
-import com.teamdev.arseniuk.Command;
+import com.teamdev.arseniuk.BinaryOperation;
 import com.teamdev.arseniuk.Operation;
-import com.teamdev.arseniuk.Visitor;
-import com.teamdev.arseniuk.impl.CalculationStack;
 
-import java.util.Deque;
+public class Multiplication extends BinaryOperation {
 
-public class Multiplication extends Command {
-
-    public Multiplication() {
-        super(Operation.MULTIPLICATION);
+    public Multiplication(int parsingIndex) {
+        super(Operation.MULTIPLICATION, parsingIndex);
     }
 
     @Override
-    public void execute(CalculationStack stack) {
-        final Deque<Double> operands = stack.getOperandStack();
-        final double result = operands.pop() * operands.pop();
-        operands.push(result);
+    public double calculate(double leftOperand, double rightOperand) {
+        return leftOperand * rightOperand;
     }
-
-    @Override
-    public void accept(Visitor visitor) throws CalculationException {
-        visitor.visit(this);
-    }
-
 }

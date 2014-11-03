@@ -1,23 +1,18 @@
 package com.teamdev.arseniuk.impl;
 
 import com.teamdev.arseniuk.CalculationException;
-import com.teamdev.arseniuk.Command;
-import com.teamdev.arseniuk.Operation;
-import com.teamdev.arseniuk.Visitor;
+import com.teamdev.arseniuk.Token;
 
-public class EndOfExpression extends Command {
+public class EndOfExpression extends Token {
 
-    public EndOfExpression() {
-        super(Operation.END_OF_EXPRESSION);
+    public EndOfExpression(int parsingIndex) {
+        super(parsingIndex);
     }
 
     @Override
-    public void execute(CalculationStack stack) {
-
-    }
-
-    @Override
-    public void accept(Visitor visitor) throws CalculationException {
-        visitor.visit(this);
+    public void execute(CalculationStack stack) throws CalculationException {
+        if (!stack.getParenthesisStack().isEmpty())
+            throw new CalculationException("Right parenthesis missed at position ", getParsingIndex());
+        stack.executeAllOperations();
     }
 }

@@ -12,4 +12,9 @@ public class CalculationException extends Exception {
     public int getCursorPosition() {
         return cursorPosition;
     }
+
+    @Override
+    public String getMessage() {
+        return super.getMessage() + cursorPosition;
+    }
 }

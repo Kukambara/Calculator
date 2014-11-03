@@ -1,42 +1,24 @@
 package com.teamdev.arseniuk.impl.parser;
 
-import com.teamdev.arseniuk.*;
-import com.teamdev.arseniuk.impl.CalculationContext;
-import com.teamdev.arseniuk.impl.operation.LeftParenthesis;
+import com.teamdev.arseniuk.CalculationParser;
+import com.teamdev.arseniuk.Parenthesis;
+import com.teamdev.arseniuk.Token;
+import com.teamdev.arseniuk.impl.ExpressionReader;
 import com.teamdev.arseniuk.impl.operation.RightParenthesis;
 
-import java.util.HashMap;
-
-import static com.teamdev.arseniuk.Operation.LEFT_PARENTHESIS;
-import static com.teamdev.arseniuk.Operation.RIGHT_PARENTHESIS;
-
 public class RightParenthesisParser implements CalculationParser {
-    private final HashMap<Operation, CommandCreator> operations = new HashMap<Operation, CommandCreator>() {{
-        put(RIGHT_PARENTHESIS, new CommandCreator() {
-            @Override
-            public Command getInstance() {
-                return new RightParenthesis();
-            }
-        });
-    }};
 
     @Override
-    public Token parse(CalculationContext context) {
-        final String expression = context.getExpression();
+    public Token parse(ExpressionReader reader) {
+        final String expression = reader.getRemainExpression();
         final Token token;
-        int parsingIndex = context.getExpressionParsingIndex();
-        while (parsingIndex != expression.length()) {
-            final char operationSymbol = expression.charAt(parsingIndex);
-            if (!Character.isSpaceChar(operationSymbol)) {
-                final CommandCreator creator = operations.get(Operation.get(operationSymbol));
-                if (creator != null) {
-                    token = creator.getInstance();
-                    parsingIndex++;
-                    context.setExpressionParsingIndex(parsingIndex);
-                    return token;
-                }
-            }
-            parsingIndex++;
+        if (expression.isEmpty()) {
+            return null;
+        }
+        if (expression.charAt(0) == Parenthesis.RIGHT_PARENTHESIS.getSymbol()) {
+            token = new RightParenthesis(reader.getIndex());
+            reader.incrementIndex(1);
+            return token;
         }
         return null;
     }

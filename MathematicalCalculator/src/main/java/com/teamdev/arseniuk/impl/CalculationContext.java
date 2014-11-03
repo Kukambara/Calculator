@@ -1,29 +1,19 @@
 package com.teamdev.arseniuk.impl;
 
-import com.teamdev.arseniuk.*;
+import com.teamdev.arseniuk.CalculationException;
+import com.teamdev.arseniuk.StateAcceptor;
+import com.teamdev.arseniuk.StateMachineContext;
+import com.teamdev.arseniuk.TransitionMatrix;
 
-public class CalculationContext implements StateMachineContext<State, CalculationContext> {
+public class CalculationContext implements StateMachineContext<State, CalculationContext, CalculationException> {
     private final CalculationMatrix matrix = new CalculationMatrix();
     private final CalculationAcceptor acceptor = new CalculationAcceptor();
     private final CalculationStack stack = new CalculationStack();
+    private final ExpressionReader reader;
 
-    private final String expression;
-    private int expressionParsingIndex;
 
     public CalculationContext(String expression) {
-        this.expression = expression;
-    }
-
-    public String getExpression() {
-        return expression;
-    }
-
-    public int getExpressionParsingIndex() {
-        return expressionParsingIndex;
-    }
-
-    public void setExpressionParsingIndex(int expressionParsingIndex) {
-        this.expressionParsingIndex = expressionParsingIndex;
+        reader = new ExpressionReader(expression);
     }
 
     public CalculationStack getStack() {
@@ -36,7 +26,11 @@ public class CalculationContext implements StateMachineContext<State, Calculatio
     }
 
     @Override
-    public StateAcceptor<State, CalculationContext> getAcceptor() {
+    public StateAcceptor<State, CalculationContext, CalculationException> getAcceptor() {
         return acceptor;
+    }
+
+    public ExpressionReader getReader() {
+        return reader;
     }
 }
