@@ -161,4 +161,13 @@ public class CalculationTest {
         assertEquals(expected, calculator.calculate(input), 0);
     }
 
+    @Test
+    public void testFunctionTestInDifficultExpression() throws CalculationException {
+        final double expected = 23;
+        final String input = "1+sum(9,1,(6),2*(1+2))";
+        Calculator calculator = new Calculator();
+        assertEquals(expected, calculator.calculate(input), 0);
+    }
+
+
 }

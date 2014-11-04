@@ -15,10 +15,12 @@ public class CalculationStack {
     private class FunctionArgument {
         private final int operationCount;
         private final int operandCount;
+        private final int parenthesisCount;
 
-        private FunctionArgument(int operationCount, int operandCount) {
+        private FunctionArgument(int operationCount, int operandCount, int parenthesisCount) {
             this.operationCount = operationCount;
             this.operandCount = operandCount;
+            this.parenthesisCount = parenthesisCount;
         }
 
         public int getOperationCount() {
@@ -27,6 +29,10 @@ public class CalculationStack {
 
         public int getOperandCount() {
             return operandCount;
+        }
+
+        public int getParenthesisCount() {
+            return parenthesisCount;
         }
     }
 
@@ -69,7 +75,7 @@ public class CalculationStack {
     public void executeFunctionArgument() {
         logger.info("Executing function argument");
         final FunctionArgument argument = functionArgumentStack.peek();
-        while (operationStack.size() > argument.getOperationCount()) {
+        while (!operationStack.isEmpty() && argument != null && operationStack.size() > argument.getOperationCount()) {
             executeTopOperation();
         }
     }
@@ -89,19 +95,20 @@ public class CalculationStack {
     }
 
     private boolean isParenthesisBelongsFunction() {
-        return !functionArgumentStack.isEmpty() && functionArgumentStack.peek().getOperationCount() == parenthesisStack.peek();
+        return (!functionArgumentStack.isEmpty())
+                && functionArgumentStack.peek().getParenthesisCount() + 1 == parenthesisStack.size();
     }
 
     private void executeOperationsInParenthesis() {
 
-        final Integer lastLeftParenthesis = parenthesisStack.peek();
+        final Integer lastLeftParenthesis = parenthesisStack.pop();
         while (operationStack.size() > lastLeftParenthesis) {
             executeTopOperation();
         }
-        parenthesisStack.pop();
     }
 
     private void executeFunction() throws CalculationException {
+        executeFunctionArgument();
         final FunctionArgument functionInfo = functionArgumentStack.pop();
         final ArrayList<Double> arguments = new ArrayList<>();
         while (operandStack.size() > functionInfo.getOperandCount()) {
@@ -114,7 +121,9 @@ public class CalculationStack {
     }
 
     public void pushFunction(AbstractFunction function) {
-        functionArgumentStack.push(new FunctionArgument(operationStack.size(), operandStack.size()));
+        functionArgumentStack.push(
+                new FunctionArgument(operationStack.size(), operandStack.size(), parenthesisStack.size())
+        );
         functionStack.push(function);
     }
 
