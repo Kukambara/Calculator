@@ -3,12 +3,16 @@ package com.teamdev.arseniuk.impl.parser;
 import com.teamdev.arseniuk.*;
 import com.teamdev.arseniuk.impl.ExpressionReader;
 import com.teamdev.arseniuk.impl.operation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
 import static com.teamdev.arseniuk.Operation.*;
 
 public class OperationParser implements CalculationParser {
+
+    private final Logger logger = LoggerFactory.getLogger(Subtraction.class);
 
     private final HashMap<Operation, CommandCreator> operations = new HashMap<Operation, CommandCreator>() {{
         put(ADDITION, new CommandCreator() {
@@ -45,6 +49,7 @@ public class OperationParser implements CalculationParser {
 
     @Override
     public Token parse(ExpressionReader reader) {
+        logger.info("trying to parse operation.");
         final String expression = reader.getRemainExpression();
         final Token token;
         for (String presentation : Operation.getPresentations()) {

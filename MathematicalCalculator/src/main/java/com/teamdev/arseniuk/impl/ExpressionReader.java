@@ -1,6 +1,10 @@
 package com.teamdev.arseniuk.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ExpressionReader {
+    private final Logger logger = LoggerFactory.getLogger(ExpressionReader.class);
     private final String expression;
     private int index;
 
@@ -13,11 +17,13 @@ public class ExpressionReader {
     }
 
     public String getRemainExpression() {
+        logger.info("Getting remain expression.");
         skipWhitespaces();
         return expression.substring(index);
     }
 
     public void skipWhitespaces() {
+        logger.info("skipping white space.");
         while (index < expression.length() && Character.isWhitespace(expression.charAt(index))) {
             index++;
         }

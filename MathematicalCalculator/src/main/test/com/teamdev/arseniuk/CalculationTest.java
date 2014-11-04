@@ -129,4 +129,36 @@ public class CalculationTest {
         calculator.calculate(input);
     }
 
+    @Test
+    public void testSqrtFunction() throws CalculationException {
+        final double expected = 3;
+        final String input = "sqrt(9)";
+        Calculator calculator = new Calculator();
+        assertEquals(expected, calculator.calculate(input), 0);
+    }
+
+    @Test
+    public void testMinFunction() throws CalculationException {
+        final double expected = 3;
+        final String input = "min(9,6,3)";
+        Calculator calculator = new Calculator();
+        assertEquals(expected, calculator.calculate(input), 0);
+    }
+
+    @Test
+    public void testMaxFunction() throws CalculationException {
+        final double expected = 9;
+        final String input = "max(9,6,3)";
+        Calculator calculator = new Calculator();
+        assertEquals(expected, calculator.calculate(input), 0);
+    }
+
+    @Test
+    public void testSumFunction() throws CalculationException {
+        final double expected = 16;
+        final String input = "sum(9,6,1)";
+        Calculator calculator = new Calculator();
+        assertEquals(expected, calculator.calculate(input), 0);
+    }
+
 }
