@@ -18,7 +18,5 @@ public class ConsoleCalculator {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-
     }
 }

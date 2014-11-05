@@ -162,7 +162,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void testFunctionTestInDifficultExpression() throws CalculationException {
+    public void testFunctionInDifficultExpression() throws CalculationException {
         final double expected = 23;
         final String input = "1+sum(9,1,(6),2*(1+2))";
         Calculator calculator = new Calculator();
