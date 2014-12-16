@@ -6,10 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class SwingCalculator extends JFrame {
 
+    private static final String OPEN_IN_CONSOLE = "-c";
     private final Calculator calculator = new Calculator();
     private final JLabel lbExpression;
     private final JLabel lbResult;
@@ -37,34 +37,12 @@ public class SwingCalculator extends JFrame {
 
         gl.setAutoCreateContainerGaps(true);
 
-        JButton executeButton = new JButton("Console");
-        executeButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Runtime rt = Runtime.getRuntime();
-                    String[] cmd = {"java", "-cp", ConsoleCalculator.class.getProtectionDomain().getCodeSource().getLocation().getPath(), ConsoleCalculator.class.getCanonicalName()};
-                    Process p = new ProcessBuilder(cmd).redirectError(ProcessBuilder.Redirect.INHERIT).redirectOutput(ProcessBuilder.Redirect.INHERIT).start();
-                    p.waitFor();
-
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-
         gl.setHorizontalGroup(gl.createParallelGroup()
                         .addComponent(lbExpression)
                         .addComponent(taExpression)
                         .addComponent(btnCalculate)
                         .addComponent(lbResult)
                         .addComponent(taResult)
-                        .addComponent(executeButton)
-
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
@@ -73,7 +51,6 @@ public class SwingCalculator extends JFrame {
                         .addComponent(btnCalculate)
                         .addComponent(lbResult)
                         .addComponent(taResult)
-                        .addComponent(executeButton)
         );
 
         pack();
@@ -101,12 +78,17 @@ public class SwingCalculator extends JFrame {
 
     public static void main(String[] args) {
 
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                SwingCalculator calculator = new SwingCalculator();
-                calculator.setVisible(true);
-            }
-        });
+        if (args.length != 0 && args[0].equals(OPEN_IN_CONSOLE)) {
+            ConsoleCalculator consoleCalculator = new ConsoleCalculator();
+            consoleCalculator.main(new String[]{});
+        } else {
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    SwingCalculator calculator = new SwingCalculator();
+                    calculator.setVisible(true);
+                }
+            });
+        }
     }
 }
