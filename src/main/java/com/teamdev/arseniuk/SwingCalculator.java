@@ -73,8 +73,8 @@ public class SwingCalculator extends JFrame {
         public void actionPerformed(ActionEvent event) {
 
             try {
-                final double result = calculator.calculate(taExpression.getText());
-                taResult.setText(String.valueOf(result));
+                final java.util.List<Double> results = calculator.calculate(taExpression.getText());
+                taResult.setText(String.valueOf(results));
 
             } catch (CalculationException e) {
                 taResult.setText(e.getMessage());

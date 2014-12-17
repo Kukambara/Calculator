@@ -18,7 +18,7 @@ public class CalculationTest {
         final double expected = 200;
         final String input = "200";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class CalculationTest {
         final double expected = .200;
         final String input = ".200";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class CalculationTest {
         final double expected = 200;
         final String input = "100 + 100";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CalculationTest {
         final double expected = 50;
         final String input = "150 - 100";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class CalculationTest {
         final double expected = 30;
         final String input = "90 / 3";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class CalculationTest {
         final double expected = 100;
         final String input = "20 * 5";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class CalculationTest {
         final double expected = 1024;
         final String input = "2 ^ 10";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class CalculationTest {
         final double expected = 70;
         final String input = "10 + 20 * 3";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class CalculationTest {
         final double expected = 180;
         final String input = "2 * (10 + 20)* 3";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CalculationTest {
         final double expected = -21;
         final String input = "(10 + (1*3) - 20 )* 3";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class CalculationTest {
         final double expected = 256;
         final String input = "2^2^3";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
 
@@ -134,7 +134,7 @@ public class CalculationTest {
         final double expected = 3;
         final String input = "sqrt(9)";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class CalculationTest {
         final double expected = 3;
         final String input = "min(9,6,3)";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class CalculationTest {
         final double expected = 9;
         final String input = "max(9,6,3)";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -158,7 +158,7 @@ public class CalculationTest {
         final double expected = 16;
         final String input = "sum(9,6,1)";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class CalculationTest {
         final double expected = 23;
         final String input = "1+sum(9,1,(6),2*(1+2))";
         Calculator calculator = new Calculator();
-        assertEquals(expected, calculator.calculate(input), 0);
+        assertEquals(expected, calculator.calculate(input).get(0), 0);
     }
 
 

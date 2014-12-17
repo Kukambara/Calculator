@@ -1,7 +1,9 @@
 package com.teamdev.arseniuk;
 
+import java.util.List;
+
 public interface MathCalculator {
 
-    public double calculate(String expression) throws Exception;
+    public List<Double> calculate(String expression) throws Exception;
 
 }

@@ -6,6 +6,9 @@ import com.teamdev.arseniuk.MathCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Calculator extends FiniteStateMachine<State, Double, CalculationContext, CalculationException> implements MathCalculator {
 
     private final Logger logger = LoggerFactory.getLogger(Calculator.class);
@@ -22,9 +25,17 @@ public class Calculator extends FiniteStateMachine<State, Double, CalculationCon
     }
 
     @Override
-    public double calculate(String expression) throws CalculationException {
+    public List<Double> calculate(String expression) throws CalculationException {
         logger.info("Calculation starts");
-        //TODO Cheating!!
-        return run(new CalculationContext(expression.replace(",", ", ")));
+        final String[] expressions = expression.split(";");
+        List<Double> results = new ArrayList<>();
+        for (String singleExpression : expressions) {
+            Double result = run(new CalculationContext(singleExpression.replace(",", ", ")));
+            results.add(result);
+        }
+
+
+        return results;
+
     }
 }
