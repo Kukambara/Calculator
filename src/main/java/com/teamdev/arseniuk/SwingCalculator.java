@@ -16,13 +16,21 @@ public class SwingCalculator extends JFrame {
     private final JTextArea taExpression;
     private final JTextArea taResult;
     private final JButton btnCalculate;
+    private final int resultRowCount = 3;
+    private final int columns = 60;
+    private final int inputRowCount = 10;
+    private final String expressionText = "Expression";
+    private final String resultText = "Result";
+    private final String calculateText = "Calculate";
+    private final String calculatorText = "Calculator";
 
     public SwingCalculator() {
-        lbExpression = new JLabel("Expression");
-        lbResult = new JLabel("Result");
-        taExpression = new JTextArea(10, 60);
-        taResult = new JTextArea(3, 60);
-        btnCalculate = new JButton("Calculate");
+
+        lbExpression = new JLabel(expressionText);
+        lbResult = new JLabel(resultText);
+        taExpression = new JTextArea(inputRowCount, columns);
+        taResult = new JTextArea(resultRowCount, columns);
+        btnCalculate = new JButton(calculateText);
 
         prepareUI();
     }
@@ -55,7 +63,7 @@ public class SwingCalculator extends JFrame {
 
         pack();
 
-        setTitle("Calculator");
+        setTitle(calculatorText);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }

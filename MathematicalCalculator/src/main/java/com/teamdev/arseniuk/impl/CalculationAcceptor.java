@@ -1,5 +1,6 @@
 package com.teamdev.arseniuk.impl;
 
+import com.google.common.base.Preconditions;
 import com.teamdev.arseniuk.CalculationException;
 import com.teamdev.arseniuk.CalculationParser;
 import com.teamdev.arseniuk.StateAcceptor;
@@ -29,9 +30,7 @@ public class CalculationAcceptor implements StateAcceptor<State, CalculationCont
     public boolean isAcceptableState(CalculationContext context, State state) throws CalculationException {
         logger.info("Getting possible parser for state.");
         final CalculationParser parser = parsers.get(state);
-        if (parser == null) {
-            throw new IllegalStateException("Parser not found for state: " + state);
-        }
+        Preconditions.checkArgument(parser != null, "Parser not found for state: ", state);
         final Token token = parser.parse(context.getReader());
         if (token == null) {
             return false;
